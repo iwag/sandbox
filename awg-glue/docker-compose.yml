@@ -1,0 +1,8 @@
+version: '3'
+services:
+  glue:
+    image: amazon/aws-glue-libs:glue_libs_1.0.0_image_01
+    volumes:
+      - '.:/ws'
+    working_dir: '/ws'
+
