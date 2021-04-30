@@ -3,6 +3,30 @@ services:
   glue:
     image: amazon/aws-glue-libs:glue_libs_1.0.0_image_01
     volumes:
-      - '.:/ws'
+      - './:/ws'
+      - '~/.aws:/root/.aws:ro'
     working_dir: '/ws'
+    ports: 
+      - "8888:8888"
+      - "4040:4040"
+    command: "/home/jupyter/jupyter_start.sh"
+    links:
+      - "localstack:localstack"    
+  localstack:
+      container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
+      image: localstack/localstack-full
+      network_mode: bridge
+      ports:
+        - "4566:4566"
+        - "4571:4571"
+        - "8080:8080"
+      environment:
+        - SERVICES=s3
+        - PORT_WEB_UI=8080
+        - DOCKER_HOST=unix:///var/run/docker.sock
+      volumes:
+        - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+        - "/var/run/docker.sock:/var/run/docker.sock"
 
+# aws s3 cp amazon_reviews_multilingual_JP_v1_00.tsv.gz s3://test --endpoint-url=http://localhost:4566
+# aws s3api create-bucket --bucket test --endpoint-url=http://localhost:4566
