@@ -7,6 +7,5 @@ const playwright = require('playwright');
   const page = await context.newPage();
 
     await page.waitForTimeout(1000);
-  }
 
 })();
