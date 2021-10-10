@@ -31,3 +31,5 @@ const url = new URL("https://www.youtube.com/watch?v=kJdp-hJxrAk")
 capture(url.searchParams.get("v"), "20:18");
 
 console.log('done');
+
+// https://github.com/mxschmitt/playwright-go
